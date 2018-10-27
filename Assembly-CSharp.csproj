@@ -66,6 +66,8 @@
     <Compile Include="Assets\GameDataWriter.cs" />
     <Compile Include="Assets\PersistableObject.cs" />
     <Compile Include="Assets\PersistentStorage.cs" />
+    <Compile Include="Assets\Shape.cs" />
+    <Compile Include="Assets\ShapeFactory.cs" />
     <Reference Include="Unity.TextMeshPro.Editor">
       <HintPath>D:/ZLearning/Unity Learning/Object Management/Library/ScriptAssemblies/Unity.TextMeshPro.Editor.dll</HintPath>
     </Reference>

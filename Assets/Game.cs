@@ -3,18 +3,46 @@ using UnityEngine;
 
 public class Game : PersistableObject
 {
-    public PersistableObject prefab;
-    public KeyCode createKey = KeyCode.C;
+    private const int saveVersion = 1;
+ public KeyCode createKey = KeyCode.C;
     public KeyCode newGameKey = KeyCode.N;
     public KeyCode saveKey = KeyCode.S;
     public KeyCode loadKey = KeyCode.L;
-    private List<PersistableObject> objects;
+    private List<Shape> shapes;
     public PersistentStorage storage;
+    public ShapeFactory shapeFactory;
+
+    public override void Save(GameDataWriter writer)
+    {
+        writer.Write(-saveVersion);
+        writer.Write(shapes.Count);
+        foreach (Shape instance in shapes)
+        {
+  //          writer.Write(instance.ShapeId);
+            instance.Save(writer);
+        }
+    }
+
+    public override void Load(GameDataReader reader)
+    {
+        int version = -reader.ReadInt();
+        if (version > saveVersion)
+            Debug.LogError("Unsupported future save version " + version);
+        int count = version <= 0 ? -version : reader.ReadInt();
+        for (var i = 0; i < count; i++)
+        {
+            int shapeId = version > 0 ? reader.ReadInt() : 0;
+            int materialId = version > 0 ? reader.ReadInt() : 0;
+            Shape instance = shapeFactory.Get(shapeId,materialId);
+            instance.Load(reader);
+            shapes.Add(instance);
+        }
+    }
 
 
     private void Awake()
     {
-        objects = new List<PersistableObject>();
+        shapes = new List<Shape>();
     }
 
     private void Update()
@@ -34,38 +62,18 @@ public class Game : PersistableObject
 
     private void CreateObject()
     {
-        PersistableObject o = Instantiate(prefab);
-        Transform t = o.transform;
+        Shape instance = shapeFactory.GetRandom();
+        Transform t = instance.transform;
         t.localPosition = Random.insideUnitSphere * 5f;
         t.localRotation = Random.rotationUniform;
         t.localScale = Vector3.one * Random.Range(0.1f, 1f);
-        objects.Add(o);
+        shapes.Add(instance);
     }
 
     private void BeginNewGame()
     {
-        foreach (PersistableObject o in objects)
-            Destroy(o.transform.gameObject);
-        objects.Clear();
-    }
-
-    public override void Save(GameDataWriter writer)
-    {
-        writer.Write(objects.Count);
-        foreach (PersistableObject o in objects)
-        {
-            o.Save(writer);
-        }
-    }
-
-    public override void Load(GameDataReader reader)
-    {
-        int count = reader.ReadInt();
-        for (int i = 0; i < count; i++)
-        {
-            PersistableObject o = Instantiate(prefab);
-            o.Load(reader);
-            objects.Add(o);
-        }
+        foreach (Shape instance in shapes)
+            Destroy(instance.transform.gameObject);
+        shapes.Clear();
     }
 }
