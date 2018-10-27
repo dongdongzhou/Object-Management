@@ -1,16 +1,12 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using System.IO;
+﻿using System.IO;
 using UnityEngine;
 
 public class GameDataWriter
 {
-    private BinaryWriter writer;
+    private readonly BinaryWriter writer;
 
-    public GameDataWriter(BinaryWriter writer)
-    {
-        this.writer = writer;
-    }
+
+    public GameDataWriter(BinaryWriter writer) => this.writer = writer;
 
     public void Write(float value)
     {
@@ -35,5 +31,13 @@ public class GameDataWriter
         writer.Write(value.x);
         writer.Write(value.y);
         writer.Write(value.z);
+    }
+
+    public void Write(Color value)
+    {
+        writer.Write(value.r);
+        writer.Write(value.g);
+        writer.Write(value.b);
+        writer.Write(value.a);
     }
 }
