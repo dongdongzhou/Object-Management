@@ -60,14 +60,14 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\CameraMove.cs" />
-    <Compile Include="Assets\Game.cs" />
-    <Compile Include="Assets\GameDataReader.cs" />
-    <Compile Include="Assets\GameDataWriter.cs" />
-    <Compile Include="Assets\PersistableObject.cs" />
-    <Compile Include="Assets\PersistentStorage.cs" />
-    <Compile Include="Assets\Shape.cs" />
-    <Compile Include="Assets\ShapeFactory.cs" />
+    <Compile Include="Assets\Scripts\CameraMove.cs" />
+    <Compile Include="Assets\Scripts\Game.cs" />
+    <Compile Include="Assets\Scripts\GameDataReader.cs" />
+    <Compile Include="Assets\Scripts\GameDataWriter.cs" />
+    <Compile Include="Assets\Scripts\PersistableObject.cs" />
+    <Compile Include="Assets\Scripts\PersistentStorage.cs" />
+    <Compile Include="Assets\Scripts\Shape.cs" />
+    <Compile Include="Assets\Scripts\ShapeFactory.cs" />
     <None Include="Assets\Materials\InstancedColors.shader" />
     <Reference Include="Unity.TextMeshPro.Editor">
       <HintPath>D:/ZLearning/Unity Learning/Object Management/Library/ScriptAssemblies/Unity.TextMeshPro.Editor.dll</HintPath>

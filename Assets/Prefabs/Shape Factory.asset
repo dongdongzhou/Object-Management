@@ -9,7 +9,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2c6ed5cb615ddf342b1bea8dfa2a1adc, type: 3}
+  m_Script: {fileID: 11500000, guid: 5fa6dca4150b19543b19821c78c701e7, type: 3}
   m_Name: Shape Factory
   m_EditorClassIdentifier: 
   prefabs:
@@ -17,6 +17,7 @@ MonoBehaviour:
   - {fileID: 4157750160983704318, guid: d379f2514fa33e9429332319b8164ec1, type: 3}
   - {fileID: 8668877139532747364, guid: 344c25a19ca8cb34a8a10b11279ca11e, type: 3}
   materials:
+  - {fileID: 2100000, guid: 1f150ddb47edb0640b9f1a33bd33bf74, type: 2}
   - {fileID: 2100000, guid: f116f0d01eac4fd4d89c2823faa81b63, type: 2}
   - {fileID: 2100000, guid: 7487174cc59ba3c40bdad3ece7d6bc63, type: 2}
-  - {fileID: 2100000, guid: 1f150ddb47edb0640b9f1a33bd33bf74, type: 2}
+  recycle: 0
