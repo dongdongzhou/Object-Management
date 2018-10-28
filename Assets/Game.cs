@@ -5,12 +5,17 @@ public class Game : PersistableObject
 {
     private const int saveVersion = 1;
     public KeyCode createKey = KeyCode.C;
+    public KeyCode destroyKey = KeyCode.X;
     public KeyCode newGameKey = KeyCode.N;
     public KeyCode saveKey = KeyCode.S;
     public KeyCode loadKey = KeyCode.L;
     private List<Shape> shapes;
     public PersistentStorage storage;
     public ShapeFactory shapeFactory;
+    public float CreationSpeed { get; set; }
+    private float creationProgress;
+    public float DestructionSpeed { get; set; }
+    private float destructionProgress;
 
     public override void Save(GameDataWriter writer)
     {
@@ -26,7 +31,7 @@ public class Game : PersistableObject
         if (version > saveVersion)
             Debug.LogError("Unsupported future save version " + version);
         int count = version <= 0 ? -version : reader.ReadInt();
-        for (var i = 0; i < count; i++)
+        for (int i = 0; i < count; i++)
         {
             int shapeId = version > 0 ? reader.ReadInt() : 0;
             int materialId = version > 0 ? reader.ReadInt() : 0;
@@ -46,6 +51,10 @@ public class Game : PersistableObject
     {
         if (Input.GetKeyDown(createKey))
             CreateShape();
+        else if (Input.GetKeyDown(destroyKey))
+        {
+            DestroyShape();
+        }
         else if (Input.GetKeyDown(newGameKey))
             BeginNewGame();
         else if (Input.GetKeyDown(saveKey))
@@ -54,6 +63,20 @@ public class Game : PersistableObject
         {
             BeginNewGame();
             storage.Load(this);
+        }
+
+        creationProgress += Time.deltaTime * CreationSpeed;
+        while (1f <= creationProgress)
+        {
+            creationProgress -= 1f;
+            CreateShape();
+        }
+
+        destructionProgress += Time.deltaTime * DestructionSpeed;
+        while (1f <= destructionProgress)
+        {
+            destructionProgress -= 1f;
+            DestroyShape();
         }
     }
 
@@ -76,7 +99,19 @@ public class Game : PersistableObject
     private void BeginNewGame()
     {
         foreach (Shape instance in shapes)
-            Destroy(instance.transform.gameObject);
+            shapeFactory.Reclaim(instance);
         shapes.Clear();
+    }
+
+    private void DestroyShape()
+    {
+        if (shapes.Count > 0)
+        {
+            int index = Random.Range(0, shapes.Count);
+            shapeFactory.Reclaim(shapes[index]);
+            int lastIndex = shapes.Count - 1;
+            shapes[index] = shapes[lastIndex];
+            shapes.RemoveAt(lastIndex);
+        }
     }
 }
