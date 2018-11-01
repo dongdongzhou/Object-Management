@@ -42,7 +42,7 @@
 		{
 			// Albedo comes from a texture tinted by color
 			fixed4 c = tex2D (_MainTex, IN.uv_MainTex) * 
-				UNITY_ACCESS_INSTANCED_PROP(P	rops, _Color);
+				UNITY_ACCESS_INSTANCED_PROP(Props, _Color);
 
 			o.Albedo = c.rgb;
 			// Metallic and smoothness come from slider variables
