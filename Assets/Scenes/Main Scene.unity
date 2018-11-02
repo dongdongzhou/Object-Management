@@ -88,7 +88,7 @@ LightmapSettings:
     m_PVRFilteringAtrousPositionSigmaIndirect: 2
     m_PVRFilteringAtrousPositionSigmaAO: 1
     m_ShowResolutionOverlay: 1
-  m_LightingDataAsset: {fileID: 112000008, guid: e0190c7aca9e50e47bc01df556cde594,
+  m_LightingDataAsset: {fileID: 112000008, guid: 7e1abcc6aa3f5a84dac59be7bd0dcd8e,
     type: 2}
   m_UseShadowmask: 1
 --- !u!196 &4
@@ -242,7 +242,7 @@ MonoBehaviour:
   loadKey: 108
   storage: {fileID: 1749897333}
   shapeFactory: {fileID: 11400000, guid: 78204a25dfe6a164ebbe6e6b1647388d, type: 2}
-  levelCount: 2
+  levelCount: 3
 --- !u!1 &203423582
 GameObject:
   m_ObjectHideFlags: 0

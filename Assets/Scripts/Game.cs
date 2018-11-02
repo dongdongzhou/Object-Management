@@ -5,22 +5,28 @@ using UnityEngine.SceneManagement;
 
 public class Game : PersistableObject
 {
-    private const int saveVersion = 2;
+    private const int SaveVersion = 2;
     public KeyCode createKey = KeyCode.C;
     public KeyCode destroyKey = KeyCode.X;
     public KeyCode newGameKey = KeyCode.N;
     public KeyCode saveKey = KeyCode.S;
     public KeyCode loadKey = KeyCode.L;
     private List<Shape> shapes;
-    public PersistentStorage storage;
-    public ShapeFactory shapeFactory;
+    [SerializeField] PersistentStorage storage;
+    [SerializeField] ShapeFactory shapeFactory;
     private float creationProgress;
     private float destructionProgress;
-    public int levelCount;
+    [SerializeField] int levelCount;
     private int loadedLevelBuildIndex;
     public float CreationSpeed { get; set; }
     public float DestructionSpeed { get; set; }
+    public SpawnZone SpawnZoneOfLevel{ get; set; }
+    public static Game Instance { get; private set; }
 
+    void OnEnable()
+    {
+        Instance = this;
+    }
     public override void Save(GameDataWriter writer)
     {
         writer.Write(shapes.Count);
@@ -33,7 +39,7 @@ public class Game : PersistableObject
     public override void Load(GameDataReader reader)
     {
         int version = reader.Version;
-        if (version > saveVersion)
+        if (version > SaveVersion)
             Debug.LogError("Unsupported future save version " + version);
         int count = version <= 0 ? -version : reader.ReadInt();
         StartCoroutine(LoadLevel(version < 2 ? 1 : reader.ReadInt()));
@@ -78,7 +84,7 @@ public class Game : PersistableObject
         else if (Input.GetKeyDown(newGameKey))
             BeginNewGame();
         else if (Input.GetKeyDown(saveKey))
-            storage.Save(this, saveVersion);
+            storage.Save(this, SaveVersion);
         else if (Input.GetKeyDown(loadKey))
         {
             BeginNewGame();
@@ -114,7 +120,7 @@ public class Game : PersistableObject
     {
         Shape instance = shapeFactory.GetRandom();
         Transform t = instance.transform;
-        t.localPosition = Random.insideUnitSphere * 5f;
+        t.localPosition = SpawnZoneOfLevel.SpawnPoint;
         t.localRotation = Random.rotationUniform;
         t.localScale = Vector3.one * Random.Range(0.1f, 1f);
         instance.SetColor(Random.ColorHSV(
