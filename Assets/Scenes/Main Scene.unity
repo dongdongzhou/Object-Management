@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.38490227, g: 0.39734924, b: 0.38356346, a: 1}
+  m_IndirectSpecularColor: {r: 0.44300658, g: 0.4921953, b: 0.57192475, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -88,7 +88,7 @@ LightmapSettings:
     m_PVRFilteringAtrousPositionSigmaIndirect: 2
     m_PVRFilteringAtrousPositionSigmaAO: 1
     m_ShowResolutionOverlay: 1
-  m_LightingDataAsset: {fileID: 112000008, guid: 7e1abcc6aa3f5a84dac59be7bd0dcd8e,
+  m_LightingDataAsset: {fileID: 112000004, guid: 5b90b68205a88d04f8e5fb15ea587ffb,
     type: 2}
   m_UseShadowmask: 1
 --- !u!196 &4
@@ -243,6 +243,9 @@ MonoBehaviour:
   storage: {fileID: 1749897333}
   shapeFactory: {fileID: 11400000, guid: 78204a25dfe6a164ebbe6e6b1647388d, type: 2}
   levelCount: 3
+  reseedOnLoad: 0
+  creationSpeedSlider: {fileID: 1461388687}
+  destructionSpeedSlider: {fileID: 203423584}
 --- !u!1 &203423582
 GameObject:
   m_ObjectHideFlags: 0
