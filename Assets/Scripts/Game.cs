@@ -7,7 +7,7 @@ using UnityEngine.UI;
 [DisallowMultipleComponent]
 public class Game : PersistableObject
 {
-    private const int SaveVersion = 3;
+    private const int SaveVersion = 4;
     public KeyCode createKey = KeyCode.C;
     public KeyCode destroyKey = KeyCode.X;
     public KeyCode newGameKey = KeyCode.N;
@@ -140,6 +140,8 @@ public class Game : PersistableObject
 
     private void FixedUpdate()
     {
+        foreach (Shape shape in shapes)
+            shape.GameUpdate();
         creationProgress += Time.deltaTime * CreationSpeed;
         while (1f <= creationProgress)
         {
@@ -158,16 +160,7 @@ public class Game : PersistableObject
     private void CreateShape()
     {
         Shape instance = shapeFactory.GetRandom();
-        Transform t = instance.transform;
-        t.localPosition = GameLevel.Current.SpawnPoint;
-        t.localRotation = Random.rotationUniform;
-        t.localScale = Vector3.one * Random.Range(0.1f, 1f);
-        instance.SetColor(Random.ColorHSV(
-                                          hueMin: 0f, hueMax: 1f,
-                                          saturationMin: 0.5f, saturationMax: 1f,
-                                          valueMin: 0.25f, valueMax: 1f,
-                                          alphaMin: 1f, alphaMax: 1f
-                                         ));
+       GameLevel.Current.ConfigureSpawn(instance);
         shapes.Add(instance);
     }
 

@@ -6,8 +6,7 @@ public class GameLevel : PersistableObject
     [SerializeField] private PersistableObject[] persistentObjects;
     public static GameLevel Current { get; private set; }
 
-    public Vector3 SpawnPoint => spawnZone.SpawnPoint;
-
+  
     private void OnEnable()
     {
         Current = this;
@@ -26,5 +25,10 @@ public class GameLevel : PersistableObject
         int savedCount = reader.ReadInt();
         for (int i = 0; i < savedCount; i++)
             persistentObjects[i].Load(reader);
+    }
+
+    public void ConfigureSpawn(Shape shape)
+    {
+        spawnZone.ConfigureSpawn(shape);
     }
 }
